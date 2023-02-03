@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
         Call<DataModal> call = retrofitAPI.createPost(modal);
 
-        // on below line we are executing our method.
         call.enqueue(new Callback<DataModal>() {
             @Override
             public void onResponse(Call<DataModal> call, Response<DataModal> response) {
@@ -81,23 +80,21 @@ public class MainActivity extends AppCompatActivity {
                 usernameEdt.setText("");
                 nameEdt.setText("");
 
-                // we are getting response from our body
-                // and passing it to our modal class.
+                // recibimos respuesta del body
+                // y la pasamos dentro de nuestro modelo
                 DataModal responseFromAPI = response.body();
 
-                // on below line we are getting our data from modal class and adding it to our string.
+                // aqui obtenemos los datos del modelo y lo convertimos a una respuesta en String
                 String responseString = "Codigo de Repuesta : " + response.code() + "\nNombre : " + responseFromAPI.getName() + "\n" + "Usuario : " + responseFromAPI.getUsername();
 
-                // below line we are setting our
-                // string to our text view.
+                // y ese responseString lo ponemos dentro del TextView que añadimos en el layout
                 responseTV.setText(responseString);
             }
 
             @Override
             public void onFailure(Call<DataModal> call, Throwable t) {
-                // setting text to our text view when
-                // we get error response from API.
-                responseTV.setText("Error found is : " + t.getMessage());
+                // mandara este mensaje si obtenemos un error en la respuesta de la api
+                responseTV.setText("El error encontrado es : " + t.getMessage());
             }
         });
     }
